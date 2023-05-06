@@ -72,4 +72,19 @@ mod tests {
 
         assert_eq!(raw_text, decrypted_text);
     }
+
+    #[test]
+    fn encrypt_image() {
+        let filename = "assets/pokemon.jfif";
+        let password = "i_love_pokemon";
+
+        let raw_bytes = fs::read(filename).unwrap();
+        let encrypted_bytes = encrypt_bytes(&raw_bytes, password);
+        let encrypt_filename = "assets/pokemon-enc.jfif";
+        fs::write(encrypt_filename, &encrypted_bytes);
+
+        let decrypted_bytes = decrypt_bytes(&encrypted_bytes, password);
+        let decrypt_filename = "assets/pokemon-dec.jfif";
+        fs::write(decrypt_filename, &decrypted_bytes);
+    }
 }
